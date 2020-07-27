@@ -6,7 +6,6 @@ export interface TestState {
     str: string;
 }
 
-
 const state: TestState = {
     str: "dsqdqsdqs"
 };
