@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '../views/Home.vue';
+const Test = (resolve: any) => require(["@/modules/Test.vue"], (m: any) => resolve(m.default));
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,11 @@ const routes: RouteConfig[] = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
+  {
+    path: '/test',
+    name: 'Test',
+    component: Test,
+  }
 ];
 
 const router = new VueRouter({

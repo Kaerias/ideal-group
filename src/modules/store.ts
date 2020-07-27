@@ -8,11 +8,11 @@ export interface TestState {
 
 
 const state: TestState = {
-    str: ""
+    str: "dsqdqsdqs"
 };
 
 const getters: GetterTree<TestState, RootState> = {
-    userListe(state) {
+    getStr(state) {
         return state.str;
     }
 }
@@ -31,5 +31,7 @@ const mutations: MutationTree<TestState> = {
 export const test: Module<TestState, RootState> = {
   namespaced: true,
   state,
-  getters
+  getters,
+  actions,
+  mutations
 };
