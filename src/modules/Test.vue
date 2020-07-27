@@ -9,7 +9,7 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 import { test, TestState } from "./store";
-import {Action, Getter, namespace } from "vuex-class";
+import { Action, Getter, namespace } from "vuex-class";
 
 const testModule = namespace("test");
 
