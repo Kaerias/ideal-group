@@ -1,11 +1,11 @@
 import { RouteConfig } from "vue-router";
 
-const Test = (resolve: any) => require(["@/modules/Test.vue"], (m: any) => resolve(m.default));
+const Board = (resolve: any) => require(["@/modules/board/Board.vue"], (m: any) => resolve(m.default));
 
 
 const module: RouteConfig = {
-    path: '/test',
-    component: Test,
+    path: '/',
+    component: Board,
 };
 
 export default module;
