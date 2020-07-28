@@ -7,7 +7,13 @@
       </tr>
     </table>
     <p>score = {{score}}</p>
-    <p>tour: {{tour}} </p>
+    <p>tour: {{tour}}</p>
+    <button @click="save()">save</button>
+    <table>
+      <tr v-for="save in nbrSave" :key="save">
+        <button @click="changeSave(save)">save: {{save}}</button>
+      </tr>
+    </table>
   </div>
 </template>
 
@@ -27,12 +33,21 @@ export default class Board extends Vue {
 
   private score = 4;
 
-  private board: number[][] = [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-  ];
+  @boardModule.Action("save")
+  private saveBoard!: (board: number[][]) => void;
+
+  @boardModule.Action("changeSave")
+  private changeSave!: (changeSave: number) => void;
+
+  @boardModule.Getter("getBoard")
+  private board!: number[][];
+
+  @boardModule.Getter("getSave")
+  private nbrSave!: number;
+
+  private save() {
+    this.saveBoard(this.board);
+  }
 
   private addJeton(ligne: number[]) {
     for (let i = 0; i < ligne.length; i++) {
@@ -47,8 +62,7 @@ export default class Board extends Vue {
   }
 
   public mounted() {
-    this.board[Math.floor(Math.random() * Math.floor(4))].splice(Math.floor(Math.random() * Math.floor(4)), 1, 2);
-    this.board[Math.floor(Math.random() * Math.floor(4))].splice(Math.floor(Math.random() * Math.floor(4)), 1, 2);
+
   }
 
   public beforeCreate() {
