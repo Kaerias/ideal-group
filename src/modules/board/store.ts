@@ -4,17 +4,25 @@ import { Module, ActionTree, MutationTree, GetterTree } from "vuex";
 // tslint:disable-next-line: no-empty-interface
 export interface BoardState {
   board: number[][][];
-  saveChose: number;
   boardChoose: number[][];
+  tour: number;
+  score: number;
 }
 
 const state: BoardState = {
   board: [],
-  saveChose: 0,
-  boardChoose: []
+  boardChoose: [],
+  tour: 1,
+  score: 4
 };
 
 const getters: GetterTree<BoardState, RootState> = {
+  getScore(state) {
+    return state.score;
+  },
+  getTour(state) {
+    return state.tour;
+  },
   getSave(state) {
     return state.board.length
   },
@@ -47,15 +55,27 @@ const actions: ActionTree<BoardState, RootState> = {
   },
   changeSave({ commit }, changeSave: number) {
     commit("changeSave", changeSave)
+  },
+  addScore({ commit }, score: number) {
+    commit("scoreAdded", score);
+  },
+  addTour({ commit }, tour: number) {
+    commit("tourAdded", tour);
   }
 };
 
 const mutations: MutationTree<BoardState> = {
   addSave(state, board: number[][]) {
-    state.board.push(board);
+    state.board.push([...board]);
   },
   changeSave(state, changeSave: number) {
-    state.saveChose = changeSave;
+    state.boardChoose = [...state.board[changeSave]];
+  },
+  tourAdded(state, tour: number) {
+    state.tour += tour;
+  },
+  scoreAdded(state, score: number) {
+    state.score += score;
   }
 }
 export const board: Module<BoardState, RootState> = {

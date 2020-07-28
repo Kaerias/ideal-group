@@ -11,7 +11,7 @@
     <button @click="save()">save</button>
     <table>
       <tr v-for="save in nbrSave" :key="save">
-        <button @click="changeSave(save)">save: {{save}}</button>
+        <button @click="changeSave(save - 1)">save: {{save}}</button>
       </tr>
     </table>
   </div>
@@ -29,10 +29,6 @@ const boardModule = namespace("board");
 export default class Board extends Vue {
   private nbrCaseByLign = 5;
 
-  private tour = 1;
-
-  private score = 4;
-
   @boardModule.Action("save")
   private saveBoard!: (board: number[][]) => void;
 
@@ -45,6 +41,18 @@ export default class Board extends Vue {
   @boardModule.Getter("getSave")
   private nbrSave!: number;
 
+  @boardModule.Getter("getScore")
+  private score!: number;
+
+  @boardModule.Getter("getTour")
+  private tour!: number;
+
+  @boardModule.Action("addScore")
+  private addScore!: (score: number) => void;
+
+  @boardModule.Action("addTour")
+  private addTour!: (tour: number) => void;
+
   private save() {
     this.saveBoard(this.board);
   }
@@ -54,20 +62,10 @@ export default class Board extends Vue {
       if (ligne[i] === 0) {
         const jeton = Math.pow(2, Math.floor(Math.random() * 10));
         ligne.splice(i, 1, jeton);
-        this.tour += 1;
-        this.score += jeton;
+        this.addScore(jeton);
+        this.addTour(1);
         return;
       }
-    }
-  }
-
-  public mounted() {
-
-  }
-
-  public beforeCreate() {
-    if (this.$store.state.board === undefined) {
-      this.$store.registerModule("board", board);
     }
   }
 }
