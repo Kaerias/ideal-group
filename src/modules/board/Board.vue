@@ -6,6 +6,8 @@
         <td v-for="(jeton, indexJeton) in ligne" :key="indexJeton">{{jeton}}</td>
       </tr>
     </table>
+    <p>score = {{score}}</p>
+    <p>tour: {{tour}} </p>
   </div>
 </template>
 
@@ -21,6 +23,10 @@ const boardModule = namespace("board");
 export default class Board extends Vue {
   private nbrCaseByLign = 5;
 
+  private tour = 0;
+
+  private score = 4;
+
   private board: number[][] = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
@@ -31,7 +37,10 @@ export default class Board extends Vue {
   private addJeton(ligne: number[]) {
     for (let i = 0; i < ligne.length; i++) {
       if (ligne[i] === 0) {
-        ligne.splice(i, 1, Math.pow(2, Math.floor(Math.random() * 10)));
+        const jeton = Math.pow(2, Math.floor(Math.random() * 10));
+        ligne.splice(i, 1, jeton);
+        this.tour += 1;
+        this.score += jeton;
         return;
       }
     }
