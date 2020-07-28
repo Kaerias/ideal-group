@@ -23,7 +23,7 @@ const boardModule = namespace("board");
 export default class Board extends Vue {
   private nbrCaseByLign = 5;
 
-  private tour = 0;
+  private tour = 1;
 
   private score = 4;
 
